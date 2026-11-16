@@ -1,6 +1,5 @@
 import { spawn, ChildProcess } from 'node:child_process';
 import path from 'node:path';
-import { app } from 'electron';
 
 let pythonProcess: ChildProcess | null = null;
 

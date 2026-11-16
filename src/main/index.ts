@@ -1,5 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
-import path from 'node:path';
+import { app, BrowserWindow } from 'electron';
 import { createWindow } from './window';
 import { setupIpcHandlers } from './ipc';
 import { initStorage } from './storage';
@@ -24,7 +23,7 @@ app.whenReady().then(async () => {
   mainWindow = createWindow();
 
   // Registra handlers de IPC
-  setupIpcHandlers(mainWindow);
+  setupIpcHandlers();
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
