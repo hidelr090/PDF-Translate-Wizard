@@ -1,0 +1,39 @@
+{
+  "productName": "PDF Translate Wizard",
+  "appId": "com.pdftranslatewizard.app",
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": ["x64"]
+      }
+    ],
+    "icon": "resources/icon.ico",
+    "publisherName": "PDF Translate Wizard"
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true
+  },
+  "directories": {
+    "app": "dist/electron",
+    "output": "release",
+    "buildResources": "resources"
+  },
+  "files": [
+    "dist/electron/**/*",
+    "dist/renderer/**/*",
+    "python-service/**/*",
+    "node_modules/**/*"
+  ],
+  "extraResources": [
+    {
+      "from": "python-service",
+      "to": "python-service",
+      "filter": ["**/*"]
+    }
+  ]
+}
