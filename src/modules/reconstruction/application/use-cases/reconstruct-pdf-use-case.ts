@@ -1,4 +1,4 @@
-import { PDFReconstructor, ReconstructOptions, ReconstructedPage, ReconstructedBlock } from "../../domain/interfaces/pdf-reconstructor";
+import { PDFReconstructor, ReconstructOptions, ReconstructedPage, ReconstructedBlock, ReconstructStrategy } from "../../domain/interfaces/pdf-reconstructor";
 import { pdfLib } from "pdf-lib";
 import { createCanvas, loadImage } from "canvas";
 

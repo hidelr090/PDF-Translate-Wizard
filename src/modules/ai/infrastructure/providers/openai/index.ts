@@ -1,13 +1,16 @@
 import { AIProvider, AIModel, TranslationRequest, TranslationResponse } from "../../../domain/interfaces/ai-provider";
 
 export class OpenAIProvider implements AIProvider {
+  id: string = "openai";
+  name: string = "OpenAI";
+  type: "commercial" | "local" = "commercial";
   private apiKey: string;
   private baseUrl: string = "https://api.openai.com/v1";
-  private readonly providerId = "openai";
+  
 
   constructor(config: { apiKey: string; baseUrl?: string }) {
-    this.apiKey = apiKey;
-    if (baseUrl) this.baseUrl = baseUrl;
+    this.apiKey = config.apiKey;
+    if (config.baseUrl) this.baseUrl = config.baseUrl;
   }
 
   async validateConnection(): Promise<boolean> {
@@ -106,23 +109,23 @@ export class OpenAIProvider implements AIProvider {
     };
   }
 
-  getCapabilities(modelId: string): {
+  async getCapabilities(modelId: string): Promise<{
     supportsStructuredOutput: boolean;
     supportsSystemPrompt: boolean;
     maxContextTokens: number;
     supportsTemperature: boolean;
     supportsTopP: boolean;
-  } {
+  }> {
     const isGpt4 = modelId.startsWith("gpt-4");
     const isGpt35 = modelId.startsWith("gpt-3.5");
 
-    return {
+    return Promise.resolve({
       supportsStructuredOutput: isGpt4,
       supportsSystemPrompt: true,
       maxContextTokens: isGpt4 ? 8192 : 4096,
       supportsTemperature: true,
       supportsTopP: isGpt4 || isGpt35,
-    };
+    });
   }
 
   private getSystemPrompt(preserveTechnicalTerms: boolean): string {
@@ -166,9 +169,4 @@ export class OpenAIProvider implements AIProvider {
     return 4096;
   }
 
-  private getCapabilities(modelId: string): string[] {
-    if (modelId.includes("4")) return ["structured_output", "system_prompt", "temperature", "top_p"];
-    if (modelId.includes("3.5")) return ["temperature", "top_p"];
-    return ["temperature"];
-  }
 }

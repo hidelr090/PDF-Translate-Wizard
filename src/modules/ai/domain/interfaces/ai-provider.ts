@@ -17,7 +17,12 @@ export interface TranslationRequest {
   modelId: string;
   sourceLanguage: string;
   targetLanguage: string;
-  context?: string;
+  context?: {
+    temperature?: number;
+    topP?: number;
+    maxTokens?: number;
+    preserveTechnicalTerms?: boolean;
+  };
   preserveTechnicalTerms: boolean;
   glossaryTerms?: string[];
 }

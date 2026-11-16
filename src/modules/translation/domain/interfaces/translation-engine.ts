@@ -18,14 +18,20 @@ export interface TranslationBlock {
   translatedText: string;
   status: "pending" | "translating" | "translated" | "failed";
   order: number;
+  boundingBox?: {
+    x0: number;
+    y0: number;
+    x1: number;
+    y1: number;
+  };
 }
 
 export interface SegmentadorConfig {
-  respectColumnBreaks: boolean;
-  preserveParagraphs: boolean;
-  maxTokensPerSegment: number;
-  includeContext: boolean;
-  contextLines: number; // Número de linhas anteriores/posteriores para contexto
+  respectColumnBreaks?: boolean;
+  preserveParagraphs?: boolean;
+  maxTokensPerSegment?: number;
+  includeContext?: boolean;
+  contextLines?: number; // Número de linhas anteriores/posteriores para contexto
 }
 
 export interface GlossaryTerm {

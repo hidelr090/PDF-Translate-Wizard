@@ -1,13 +1,15 @@
 import { AIProvider, AIModel, TranslationRequest, TranslationResponse } from "../../../domain/interfaces/ai-provider";
 
 export class AnthropicProvider implements AIProvider {
+  id: string = "anthropic";
+  name: string = "Anthropic";
+  type: "commercial" | "local" = "commercial";
   private apiKey: string;
   private baseUrl: string = "https://api.anthropic.com";
-  private readonly providerId = "anthropic";
 
   constructor(config: { apiKey: string; baseUrl?: string }) {
-    this.apiKey = apiKey;
-    if (baseUrl) this.baseUrl = baseUrl;
+    this.apiKey = config.apiKey;
+    if (config.baseUrl) this.baseUrl = config.baseUrl;
   }
 
   async validateConnection(): Promise<boolean> {
@@ -115,23 +117,22 @@ export class AnthropicProvider implements AIProvider {
     };
   }
 
-  getCapabilities(modelId: string): {
+  async getCapabilities(modelId: string): Promise<{
     supportsStructuredOutput: boolean;
     supportsSystemPrompt: boolean;
     maxContextTokens: number;
     supportsTemperature: boolean;
     supportsTopP: boolean;
-  } {
+  }> {
     const isClaude3 = modelId.includes("claude-3");
-    const isClaude2 = modelId.includes("claude-2");
 
-    return {
+    return Promise.resolve({
       supportsStructuredOutput: isClaude3,
       supportsSystemPrompt: true,
       maxContextTokens: isClaude3 ? 100000 : 100000,
       supportsTemperature: true,
       supportsTopP: true,
-    };
+    })
   }
 
   private getSystemPrompt(preserveTechnicalTerms: boolean): string {
@@ -176,8 +177,4 @@ export class AnthropicProvider implements AIProvider {
     return 100000;
   }
 
-  private getCapabilities(modelId: string): string[] {
-    if (modelId.includes("3")) return ["temperature", "top_p"];
-    return ["temperature", "top_p", "metadata"];
-  }
 }
