@@ -12,10 +12,10 @@ export async function spawnPythonService(): Promise<void> {
     pythonBin = 'python3';
   } else {
     const resourcesPath = process.resourcesPath;
-    pythonBin = path.join(resourcesPath, 'python-service', '.venv', 'bin', 'python3');
+    pythonBin = path.join(resourcesPath, 'python-service-updated', '.venv', 'bin', 'python3');
   }
 
-  const scriptPath = path.join(__dirname, '../../python-service/main.py');
+  const scriptPath = path.join(__dirname, '../../python-service-updated/main.py');
 
   pythonProcess = spawn(pythonBin, [scriptPath], {
     stdio: ['pipe', 'pipe', 'pipe'],
